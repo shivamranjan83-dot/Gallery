@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Image Gallery</title>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Arial, sans-serif; background: #0f172a; color: #fff; }
+
+header {
+  text-align: center;
+  padding: 30px 10px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+}
+
+header p {
+  color: #ccc;
+}
+
+/* Filter Section */
+.filters {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.filters button {
+  padding: 10px 18px;
+  margin: 5px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  background: #1e293b;
+  color: white;
+  transition: 0.3s;
+}
+
+.filters button:hover,
+.filters button.active {
+  background: #38bdf8;
+}
+
+/* Gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: #1e293b;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.4s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.card img:hover {
+  filter: brightness(70%);
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.card-content h3 {
+  margin-bottom: 8px;
+}
+
+.card-content p {
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* Lightbox */
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.lightbox img {
+  max-width: 85%;
+  max-height: 70%;
+  border-radius: 10px;
+}
+
+.lightbox p {
+  margin-top: 10px;
+  color: #ccc;
+}
+
+.lightbox button {
+  margin: 10px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background: #38bdf8;
+  color: #000;
+  cursor: pointer;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media(max-width: 600px) {
+  header h1 { font-size: 1.8rem; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Image Gallery </h1>
+  <p>Explore categories like Nature, City, Technology & Travel</p>
+</header>
+
+<div class="filters">
+  <button class="active" onclick="filterImages('all', this)">All</button>
+  <button onclick="filterImages('nature', this)">Nature</button>
+  <button onclick="filterImages('city', this)">City</button>
+  <button onclick="filterImages('tech', this)">Technology</button>
+  <button onclick="filterImages('travel', this)">Travel</button>
+  <button onclick="filterImages('Cars' , this)">Cars</button>
+</div>
+
+<div class="gallery" id="gallery">
+
+  <!-- Nature -->
+  <div class="card" data-category="nature">
+    <img src="https://picsum.photos/id/1015/400/300">
+    <img src="https://i.pinimg.com/1200x/4d/5e/f9/4d5ef94f9a038da39c34db143e5b98e0.jpg">
+    <img src="https://i.pinimg.com/736x/b7/15/98/b715984a3c94f3c9ed7da403aaf9a3bc.jpg">
+    <div class="card-content">
+      <h3>Mountain View</h3>
+      <p>Beautiful scenic mountain landscape.</p>
+    </div>
+  </div>
+
+  <div class="card" data-category="nature">
+    <img src="https://picsum.photos/id/1011/400/300">
+    <img src="https://i.pinimg.com/1200x/ea/a1/f3/eaa1f3921b5aa1bac076c4b81aad5714.jpg">
+    <img src="https://i.pinimg.com/1200x/4a/cf/4a/4acf4accfc843ad192e5340319b00663.jpg">
+    <div class="card-content">
+      <h3>Forest</h3>
+      <p>Dense green forest environment.</p>
+    </div>
+  </div>
+
+  <!-- City -->
+  <div class="card" data-category="city">
+    <img src="https://picsum.photos/id/1020/400/300">
+    <img src="https://i.pinimg.com/1200x/f9/97/54/f997544c66c88095c37aa9a139d065d5.jpg">
+    <img src="https://i.pinimg.com/1200x/33/84/6b/33846be5c8d39ce26b6f3ee06a647a26.jpg">
+    <div class="card-content">
+      <h3>City Lights</h3>
+      <p>Modern city nightlife.</p>
+    </div>
+  </div>
+
+  <div class="card" data-category="city">
+    <img src="https://picsum.photos/id/1031/400/300">
+    <img src="https://i.pinimg.com/1200x/17/3c/c3/173cc34a3f61eb1fc0a0e543a5744aef.jpg">
+    <img src="https://i.pinimg.com/1200x/f0/24/3b/f0243b5487526754b988e6f4810fb0fd.jpg">
+    <div class="card-content">
+      <h3>Skyscrapers</h3>
+      <p>High-rise buildings skyline.</p>
+    </div>
+  </div>
+
+  <!-- Tech -->
+  <div class="card" data-category="tech">
+    <img src="https://picsum.photos/id/180/400/300">
+    <img src="https://i.pinimg.com/736x/ec/3e/f2/ec3ef21f07feae4856befe7cd5f40f1c.jpg">
+    <img src="https://i.pinimg.com/736x/66/07/b8/6607b813ccdf18f657e2ecca4ba9b849.jpg">
+    <div class="card-content">
+      <h3>AI Technology</h3>
+      <p>Future of artificial intelligence.</p>
+    </div>
+  </div>
+
+  <div class="card" data-category="tech">
+    <img src="https://picsum.photos/id/160/400/300">
+    <img src="https://i.pinimg.com/1200x/19/75/1d/19751d804d0bf3793cd2faad8443ecb8.jpg">
+    <img src="https://i.pinimg.com/736x/dd/3a/5f/dd3a5f9cb9ecbe638d22eed4b186453c.jpg">
+    <div class="card-content">
+      <h3>Cyber Security</h3>
+      <p>Protecting digital systems.</p>
+    </div>
+  </div>
+
+  <!-- Travel -->
+  <div class="card" data-category="travel">
+    <img src="https://picsum.photos/id/1043/400/300">
+    <img src="https://i.pinimg.com/1200x/a1/e8/90/a1e890e6234c15d5856cfa10999cdb5a.jpg">
+    <img src="https://i.pinimg.com/1200x/a8/72/d4/a872d42662e7405dbb26a4e43cec099a.jpg">
+    <div class="card-content">
+      <h3>Beach</h3>
+      <p>Traveling with our source.</p>
+    </div>
+  </div>
+
+  <div class="card" data-category="travel">
+    <img src="https://i.pinimg.com/1200x/31/d1/99/31d199f278fa8fe4ab1e41b294355415.jpg">
+    <img src="https://i.pinimg.com/736x/16/84/14/1684144e3d6b6f1381c299bda5b3fbab.jpg">
+    <img src="https://i.pinimg.com/736x/f3/a7/ca/f3a7ca106943a3598aa381f667f0408b.jpg">
+    <div class="card-content">
+      <h3>Road Trip</h3>
+      <p>Adventure travel journey.</p>
+    </div>
+  </div>
+  <!--Cars-->
+  <div class="card" data-category="Cars">
+    <img src="https://i.pinimg.com/1200x/fc/d6/99/fcd699e0cc41c3f549a34c43fa7fcfd8.jpg">
+    <div class="card" data-category="Cars">
+      <img src="https://i.pinimg.com/1200x/55/d5/60/55d560dd8cb5895cd363b2c305da8f9a.jpg">
+    </div>
+    <img src="https://i.pinimg.com/736x/38/14/b1/3814b1b15d7d405c0ad4af794f5f2711.jpg">
+    <div class="card-content">
+       <h3>Caes</h3>
+       <p>porsche Bmw Lamborgini</p>
+    </div>
+
+  </div>
+
+
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <span class="close" onclick="closeLightbox()">&times;</span>
+  <img id="lightbox-img">
+  <p id="lightbox-text"></p>
+  <div>
+    <button onclick="prevImage()">Prev</button>
+    <button onclick="nextImage()">Next</button>
+  </div>
+</div>
+
+<script>
+const cards = document.querySelectorAll('.card');
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxText = document.getElementById('lightbox-text');
+let visibleCards = [...cards];
+let currentIndex = 0;
+
+cards.forEach((card, index) => {
+  const img = card.querySelector('img');
+  const text = card.querySelector('h3').innerText;
+
+  img.addEventListener('click', () => {
+    currentIndex = visibleCards.indexOf(card);
+    showLightbox(img.src, text);
+  });
+});
+
+function showLightbox(src, text) {
+  lightbox.style.display = 'flex';
+  lightboxImg.src = src;
+  lightboxText.innerText = text;
+}
+
+function closeLightbox() {
+  lightbox.style.display = 'none';
+}
+
+function nextImage() {
+  currentIndex = (currentIndex + 1) % visibleCards.length;
+  updateLightbox();
+}
+
+function prevImage() {
+  currentIndex = (currentIndex - 1 + visibleCards.length) % visibleCards.length;
+  updateLightbox();
+}
+
+function updateLightbox() {
+  const card = visibleCards[currentIndex];
+  lightboxImg.src = card.querySelector('img').src;
+  lightboxText.innerText = card.querySelector('h3').innerText;
+}
+
+function filterImages(category, btn) {
+  visibleCards = [];
+
+  document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  cards.forEach(card => {
+    if (category === 'all' || card.dataset.category === category) {
+      card.style.display = 'block';
+      visibleCards.push(card);
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+
+</body>
+</html>
