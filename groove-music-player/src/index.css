@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "DM Serif Display", serif;
+  --font-mono: "DM Mono", monospace;
+
+  --color-bg: #0d0d0f;
+  --color-surface: #18181c;
+  --color-surface-brighter: #222228;
+  --color-accent: #e8c97a;
+  --color-accent-muted: #c4a24e;
+  --color-muted: #7a7873;
+  --color-border: rgba(255, 255, 255, 0.07);
+  --color-border-hover: rgba(255, 255, 255, 0.13);
+
+  --animate-spin-slow: spin 8s linear infinite;
+}
+
+@layer base {
+  body {
+    @apply bg-bg text-[#f0ede8] font-mono antialiased;
+  }
+}
+
+@layer utilities {
+  .vinyl-gradient {
+    background: conic-gradient(
+      #1a1a1a 0deg, #111 10deg, #1a1a1a 20deg, #111 30deg,
+      #1a1a1a 40deg, #111 50deg, #1a1a1a 60deg, #111 70deg,
+      #1a1a1a 80deg, #111 90deg, #1a1a1a 100deg, #111 110deg,
+      #1a1a1a 120deg, #111 130deg, #1a1a1a 140deg, #111 150deg,
+      #1a1a1a 160deg, #111 170deg, #1a1a1a 180deg, #111 190deg,
+      #1a1a1a 200deg, #111 210deg, #1a1a1a 220deg, #111 230deg,
+      #1a1a1a 240deg, #111 250deg, #1a1a1a 260deg, #111 270deg,
+      #1a1a1a 280deg, #111 290deg, #1a1a1a 300deg, #111 310deg,
+      #1a1a1a 320deg, #111 330deg, #1a1a1a 340deg, #111 350deg, #1a1a1a 360deg
+    );
+  }
+}

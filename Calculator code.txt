@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scientific Calculator</title>
+
+<style>
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: Arial;
+}
+
+.calculator {
+  background: #111;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.display {
+  width: 100%;
+  height: 70px;
+  background: #000;
+  color: #00ffcc;
+  text-align: right;
+  font-size: 2rem;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  overflow-x: auto;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 70px);
+  gap: 10px;
+}
+
+button {
+  height: 60px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.operator { background: #ff9500; color: white; }
+.equal { background: #34c759; color: white; grid-column: span 2; }
+.clear { background: #ff3b30; color: white; }
+.number { background: #333; color: white; }
+.func { background: #444; color: #00ffcc; }
+
+@media(max-width: 600px) {
+  .buttons { grid-template-columns: repeat(5, 55px); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="calculator">
+  <div id="display" class="display">0</div>
+
+  <div class="buttons">
+    <button class="func" onclick="applyFunc('sin')">sin</button>
+    <button class="func" onclick="applyFunc('cos')">cos</button>
+    <button class="func" onclick="applyFunc('tan')">tan</button>
+    <button class="func" onclick="applyFunc('log')">log</button>
+    <button class="clear" onclick="clearDisplay()">C</button>
+
+    <button class="func" onclick="applyFunc('sqrt')">√</button>
+    <button class="func" onclick="append('(')">(</button>
+    <button class="func" onclick="append(')')">)</button>
+    <button class="operator" onclick="append('/')">÷</button>
+    <button class="operator" onclick="append('*')">×</button>
+
+    <button class="number" onclick="append('7')">7</button>
+    <button class="number" onclick="append('8')">8</button>
+    <button class="number" onclick="append('9')">9</button>
+    <button class="operator" onclick="append('-')">−</button>
+    <button class="operator" onclick="append('+')">+</button>
+
+    <button class="number" onclick="append('4')">4</button>
+    <button class="number" onclick="append('5')">5</button>
+    <button class="number" onclick="append('6')">6</button>
+    <button class="equal" onclick="calculate()">=</button>
+
+    <button class="number" onclick="append('1')">1</button>
+    <button class="number" onclick="append('2')">2</button>
+    <button class="number" onclick="append('3')">3</button>
+
+    <button class="number" onclick="append('0')">0</button>
+    <button class="number" onclick="append('.')">.</button>
+  </div>
+</div>
+
+<script>
+let display = document.getElementById('display');
+let currentInput = '';
+
+function append(value) {
+  if (display.innerText === '0') currentInput = '';
+  currentInput += value;
+  display.innerText = currentInput;
+}
+
+function clearDisplay() {
+  currentInput = '';
+  display.innerText = '0';
+}
+
+function applyFunc(func) {
+  try {
+    let value = eval(currentInput || '0');
+    let result;
+
+    switch(func) {
+      case 'sin': result = Math.sin(value); break;
+      case 'cos': result = Math.cos(value); break;
+      case 'tan': result = Math.tan(value); break;
+      case 'log': result = Math.log10(value); break;
+      case 'sqrt': result = Math.sqrt(value); break;
+    }
+
+    currentInput = result.toString();
+    display.innerText = currentInput;
+  } catch {
+    display.innerText = 'Error';
+    currentInput = '';
+  }
+}
+
+function calculate() {
+  try {
+    currentInput = eval(currentInput).toString();
+    display.innerText = currentInput;
+  } catch {
+    display.innerText = 'Error';
+    currentInput = '';
+  }
+}
+
+// Keyboard support
+window.addEventListener('keydown', (e) => {
+  const key = e.key;
+
+  if (!isNaN(key) || ['+', '-', '*', '/', '.', '(', ')'].includes(key)) {
+    append(key);
+  } else if (key === 'Enter') {
+    calculate();
+  } else if (key === 'Backspace') {
+    currentInput = currentInput.slice(0, -1);
+    display.innerText = currentInput || '0';
+  } else if (key.toLowerCase() === 'c') {
+    clearDisplay();
+  }
+});
+</script>
+
+</body>
+</html>
